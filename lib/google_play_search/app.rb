@@ -47,8 +47,13 @@ module GooglePlaySearch
     private
 
     def get_version(google_play_html)
-      version = google_play_html.search("div[itemprop='softwareVersion']").first
-      version.content.strip if version
+      info_list = google_play_html.search("div[class='xyOfqd']").first
+      info_string = info_list.content.strip
+      if info_string.include?("Varies with device")
+        version = info_string.match(/Varies with device/)[0].sub(/Varies with device/,'端末により異なります')
+      else
+        version = info_string.match(/Version[0-9.]+/)[0].sub(/Version/, '')
+      end
     end
 
     def get_last_updated(google_play_html)

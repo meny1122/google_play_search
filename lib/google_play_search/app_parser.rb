@@ -85,10 +85,10 @@ module GooglePlaySearch
       prices = app_content.css("span.price-container button.price span")
       if prices and prices.first
         if match = prices.first.content.match(/(.[0-9]*\.[0-9]+|[0-9]+)/)
-          return match[1]
+          return '¥' + match[1]
         end
       end
-      return "0"
+      return "無料"
     end
 
     def create_app(app_content)
